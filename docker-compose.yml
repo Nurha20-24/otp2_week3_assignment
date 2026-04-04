@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:11
+    container_name: fuel-calculator-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: fuel_calculator
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app:
+    image: nurha2024/fuel-calculator-app:latest
+    container_name: fuel-calculator-app
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: test
+      DISPLAY: host.docker.internal:0
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+volumes:
+  db_data:
+
+
+
+
+
