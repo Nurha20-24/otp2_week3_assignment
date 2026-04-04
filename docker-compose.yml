@@ -14,7 +14,7 @@ services:
       - db_data:/var/lib/mysql
 
   app:
-    image: nurha2024/fuel-calculator-app:latest
+    image: nurha2024/otp2_week3_assignment:latest
     container_name: fuel-calculator-app
     depends_on:
       - db
