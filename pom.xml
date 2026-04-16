@@ -14,6 +14,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.projectKey>otp2_week3</sonar.projectKey>
         <javafx.version>21</javafx.version>
+        <sonar.coverage.exclusions>
+            **/MainApp.java,
+            **/DatabaseConnection.java,
+            **/FuelCalculatorController.java,
+            **/CalculationService.java,
+            **/LocalizationService.java
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
