@@ -44,16 +44,16 @@ pipeline {
             }
         }
         stage('SonarQube Analysis') {
-        steps {
-            sh """
-                mvn clean verify sonar:sonar \
-                -Dsonar.projectKey=otp2_week3 \
-                -Dsonar.token=${SONAR_TOKEN} \
-                -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-            """
-            }
-        }
+                    steps {
+                        sh """
+                            mvn clean verify sonar:sonar \
+                            -Dsonar.projectKey=otp2_week3 \
+                            -Dsonar.token=${SONAR_TOKEN} \
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                        """
+                    }
+                }
 
         stage('Build Docker Image') {
             steps {
