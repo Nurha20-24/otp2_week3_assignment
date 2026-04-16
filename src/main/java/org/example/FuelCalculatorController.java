@@ -28,6 +28,7 @@ public class FuelCalculatorController {
 
     private LocalizationService localizationService = new LocalizationService();
     private CalculationService calculationService = new CalculationService();
+    private FuelCalculator fuelCalculator = new FuelCalculator();
     private String currentlanguage = "en";
 
     @FXML
@@ -71,6 +72,25 @@ public class FuelCalculatorController {
         }
     }
 
+    private String formatNumber(double number, String language) {
+        String formatted = String.format(java.util.Locale.US, "%.2f", number);
+        if (language.equals("fa")) {
+            // Convert western numerals to Persian numerals
+            formatted = formatted
+                    .replace("0", "۰")
+                    .replace("1", "۱")
+                    .replace("2", "۲")
+                    .replace("3", "۳")
+                    .replace("4", "۴")
+                    .replace("5", "۵")
+                    .replace("6", "۶")
+                    .replace("7", "۷")
+                    .replace("8", "۸")
+                    .replace("9", "۹");
+        }
+        return formatted;
+    }
+
     @FXML
     private void calculate(){
         try {
@@ -78,11 +98,11 @@ public class FuelCalculatorController {
             double consumption = Double.parseDouble(txtConsumption.getText());
             double price = Double.parseDouble(txtPrice.getText());
 
-            double totalFuel = (consumption / 100) * distance;
-            double totalCost = totalFuel * price;
+            double totalFuel = fuelCalculator.calculateTotalFuel(distance, consumption);
+            double totalCost = fuelCalculator.calculateTotalCost(totalFuel, price);
 
-            String fuel = String.format("%.2f", totalFuel);
-            String cost = String.format("%.2f", totalCost);
+            String fuel = formatNumber(totalFuel, currentlanguage);
+            String cost =formatNumber(totalCost, currentlanguage);
 
             String resultTemplate = localizationService.getString("result.label");
             lblResult.setText(resultTemplate.
